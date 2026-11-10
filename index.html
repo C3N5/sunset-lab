@@ -3,7 +3,14 @@
 <title>Sunset Lab · Interactive Earth-radius investigation</title>
 <link rel="stylesheet" href="./style.css"></head><body><div class="shell">
 <header><div class="brand"><div class="logo">☀</div><div><h1>Sunset Lab</h1><p>See farther. Measure curvature. Explore a physics model.</p></div></div><span class="chip">Interactive scientific model · works offline</span></header>
-<div class="layout"><section class="panel"><div class="sky"><div class="sun" id="sun"></div><div class="sea"></div><div class="observer">♟</div><span class="horizon-label">Ocean horizon · schematic animation</span></div><div class="pad"><div class="flex"><div><h2>What happens when you stand up?</h2><p class="muted">Changing your eye height changes where the curved horizon blocks the Sun. Play the illustrative sunset again.</p></div></div><div class="buttons"><button class="btn primary" id="play">▶ Play sunset</button><button class="btn" id="reset">↺ Reset</button><span id="clock" class="small" aria-live="polite">0.0 seconds</span></div><p class="small">Animation is schematic, not to scale, and not a real-time astronomical rendering.</p></div></section>
+<div class="layout"><section class="panel"><div class="sky" id="sky">
+ <div class="sky-caption">TWO VIEWS · SAME SUN</div>
+ <div class="views">
+  <div class="view"><span class="view-label">LOWER EYE POSITION</span><div class="sun" id="sunLow"></div><div class="sea"></div><span class="view-bottom" id="viewLow">0.00 m</span></div>
+  <div class="view"><span class="view-label">HIGHER EYE POSITION</span><div class="sun" id="sunHigh"></div><div class="sea"></div><span class="view-bottom" id="viewHigh">1.83 m</span></div>
+ </div>
+ <div class="animation-caption" id="animationCaption">At the lower position the Sun has just disappeared. How much longer can the higher observer see it?</div>
+</div><div class="pad"><div class="flex"><div><h2>What happens when you stand up?</h2><p class="muted">Changing your eye height changes where the curved horizon blocks the Sun. Play the illustrative sunset again.</p></div></div><div class="buttons"><button class="btn primary" id="play">▶ Play sunset</button><button class="btn" id="reset">↺ Reset</button><span id="clock" class="small" aria-live="polite">0.0 seconds</span></div><p class="small">Two perspective views · exaggerated vertical angle for visibility · modeled with a fixed 6,371 km reference Earth. The observed delay slider is an independent experimental input.</p><div class="visual-legend"><div><span>Reference Earth predicts</span><strong id="predicted">—</strong></div><div><span>Your observed delay</span><strong id="observed">11 s</strong></div><div><span>Difference</span><strong id="difference">—</strong></div></div></div></section>
 <aside class="panel pad"><h2>Experiment controls</h2><p class="muted" style="margin-bottom:22px">Change the assumed measurements to see how the model responds.</p>
 <div class="controls">
 <div class="control"><div class="slider-head"><label for="low">Lower eye height</label><span class="value" id="lowval">0.00 m</span></div><input id="low" type="range" min="0" max="2" step=".01" value="0"><small>Lying down, sitting, or a low camera</small></div>
@@ -14,8 +21,8 @@
 <div class="cards"><div class="metric"><div class="k">Inferred Earth radius · exact geometry</div><div id="radius" class="n">—</div><div class="k">Model-derived, not measured directly</div></div>
 <div class="metric"><div class="k">Horizon angle difference</div><div id="angle" class="n">—</div><div class="k">radians</div></div>
 <div class="metric"><div class="k">Approximation error</div><div id="percent" class="n">—</div><div class="k">Small-angle vs exact geometry</div></div></div>
-<div class="section-grid"><section class="panel pad"><h2>Explore the geometry</h2><p class="muted" style="margin-bottom:13px">The horizon sightline grazes a spherical planet. The line to the tangent point is perpendicular to the radius there.</p>
-<svg class="geom" viewBox="0 0 500 290" role="img" aria-label="Schematic Earth cross-section with observer, tangent sightline, Earth radius and eye height">
+<div class="section-grid"><section class="panel pad"><h2>Explore the geometry</h2><p class="muted" style="margin-bottom:13px">The observer and two tangent sightlines change as the eye heights change. Vertical separation is exaggerated for readability.</p><p class="small" id="geometryCaption">—</p>
+<svg id="geomSVG" class="geom" viewBox="0 0 500 290" role="img" aria-label="Schematic Earth cross-section with observer, tangent sightline, Earth radius and eye height">
 <defs><radialGradient id="planet"><stop stop-color="#347898"/><stop offset="1" stop-color="#194966"/></radialGradient></defs>
 <circle cx="250" cy="238" r="170" fill="url(#planet)" stroke="#6fb0c3" stroke-width="2"/><circle cx="250" cy="238" r="4" fill="#f5ddaf"/>
 <path d="M250 238 L359 108 L437 39" fill="none" stroke="#dce6f1" stroke-width="2" stroke-dasharray="5 6"/>
