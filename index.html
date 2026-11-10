@@ -1,12 +1,7 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Sunset Lab · Interactive Earth-radius investigation</title>
-<style>
-:root{color-scheme:dark;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;background:#0b1425;color:#eef3fb}*{box-sizing:border-box}
-body{margin:0;background:radial-gradient(ellipse at 10% 0%,#1d3153 0%,#0b1425 50%);min-height:100vh}.shell{max-width:1230px;margin:auto;padding:26px 22px 70px}
-header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap}.brand{display:flex;gap:12px;align-items:center}.logo{width:45px;height:45px;display:grid;place-items:center;border-radius:14px;background:#e3a562;color:#152139;font-size:25px}.brand h1{font-size:23px;margin:0}.brand p{color:#9dacc4;margin:2px 0 0;font-size:12px}.chip{border:1px solid #39506f;padding:8px 11px;color:#b3c2d5;border-radius:22px;font-size:12px}
-.layout{display:grid;grid-template-columns:1.55fr 1fr;gap:18px}.panel{border:1px solid #30415b;background:#111f34db;border-radius:18px;overflow:hidden}.pad{padding:21px}.panel h2{font-size:17px;margin:0 0 8px}.muted{color:#9db0c9;font-size:13px;line-height:1.5;margin:0}.sky{height:285px;position:relative;overflow:hidden;background:linear-gradient(#1c2c50 2%,#654461 50%,#e18c63 72%,#eeb889 100%)}.sun{position:absolute;width:76px;height:76px;border-radius:50%;left:62%;top:61%;background:#ffe7a6;box-shadow:0 0 33px #ffcf8c,0 0 76px #e89f6c;transform:translate(-50%,-50%);transition:top .12s linear}.sea{position:absolute;top:72%;left:-5%;width:110%;height:45%;background:linear-gradient(#376782,#173b60 70%);border-top:2px solid #bed8d8;box-shadow:0 -8px 26px #dfbaa757}.sea:after{content:'';position:absolute;left:0;right:0;top:25px;height:1px;background:#7192a9;opacity:.45}.horizon-label{position:absolute;left:18px;top:75%;color:#d4e7ee;font-size:11px}.observer{position:absolute;left:15%;bottom:26%;z-index:4;text-shadow:0 3px 12px #18253c;font-size:35px}.small{font-size:12px;color:#9db0c9}.flex{display:flex;align-items:center;justify-content:space-between;gap:12px}.controls{display:grid;gap:18px}.control label{display:block;color:#dbe6f5;font-weight:600;font-size:13px;margin-bottom:7px}.control input[type=range]{width:100%;accent-color:#f0b375}.control .value{color:#ffcb93;font-variant-numeric:tabular-nums;font-size:13px}.control small{font-size:11px;color:#9eb1ca}.buttons{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.btn{border:1px solid #556882;background:#243956;border-radius:10px;color:#eef3fb;padding:10px 14px;font-weight:600;cursor:pointer}.btn.primary{background:#e9ad72;color:#1e2b3e;border-color:#e9ad72}.btn:hover{filter:brightness(1.12)}.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px 0}.metric{border:1px solid #364861;border-radius:14px;background:#172942;padding:16px}.metric .n{font-size:clamp(19px,2.3vw,27px);font-weight:760;letter-spacing:-.5px;margin:7px 0 3px;font-variant-numeric:tabular-nums}.metric .k{font-size:11px;color:#9db0c9}.section-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}.formula{font-family:ui-monospace,monospace;font-size:13px;background:#0c1829;padding:12px 14px;border-radius:10px;overflow-x:auto;line-height:1.9;color:#d5e1f1}.callout{border-left:3px solid #f0b375;background:#1a2d42;padding:12px 15px;color:#becde1;font-size:12px;line-height:1.65;border-radius:0 8px 8px 0}.comparison{display:grid;grid-template-columns:1fr 1fr;gap:10px}.comparison div{background:#0e1c31;padding:13px;border-radius:11px}.comparison strong{display:block;font-size:18px;margin-top:5px}.comparison span{font-size:11px;color:#9db0c9}.geom{width:100%;height:auto;display:block;background:#0c182c;border-radius:12px}.notebook{width:100%;min-height:110px;border:1px solid #40536b;background:#0c182c;color:#e8eef7;border-radius:10px;padding:11px;resize:vertical;font:inherit;font-size:13px}.footer{margin-top:20px;color:#8f9db4;font-size:12px;line-height:1.6}.slider-head{display:flex;justify-content:space-between;align-items:center;gap:10px}.error{color:#ffb3aa;padding:8px 0;font-size:12px}.hidden{display:none}@media(max-width:850px){.layout,.section-grid{grid-template-columns:1fr}.cards{grid-template-columns:1fr 1fr}.shell{padding:17px 12px 50px}.sky{height:235px}}@media(max-width:420px){.cards{grid-template-columns:1fr}.comparison{grid-template-columns:1fr}}
-</style></head><body><div class="shell">
+<link rel="stylesheet" href="./style.css"></head><body><div class="shell">
 <header><div class="brand"><div class="logo">☀</div><div><h1>Sunset Lab</h1><p>See farther. Measure curvature. Explore a physics model.</p></div></div><span class="chip">Interactive scientific model · works offline</span></header>
 <div class="layout"><section class="panel"><div class="sky"><div class="sun" id="sun"></div><div class="sea"></div><div class="observer">♟</div><span class="horizon-label">Ocean horizon · schematic animation</span></div><div class="pad"><div class="flex"><div><h2>What happens when you stand up?</h2><p class="muted">Changing your eye height changes where the curved horizon blocks the Sun. Play the illustrative sunset again.</p></div></div><div class="buttons"><button class="btn primary" id="play">▶ Play sunset</button><button class="btn" id="reset">↺ Reset</button><span id="clock" class="small" aria-live="polite">0.0 seconds</span></div><p class="small">Animation is schematic, not to scale, and not a real-time astronomical rendering.</p></div></section>
 <aside class="panel pad"><h2>Experiment controls</h2><p class="muted" style="margin-bottom:22px">Change the assumed measurements to see how the model responds.</p>
@@ -38,59 +33,4 @@ header{display:flex;align-items:center;justify-content:space-between;gap:16px;ma
 <div class="section-grid"><section class="panel pad"><h2>How sensitive is the estimate?</h2><p class="muted" style="margin-bottom:13px">Hold the heights fixed and vary the measured time. This shows why accurate timing matters.</p><svg id="chart" viewBox="0 0 500 225" style="width:100%;height:auto;background:#0c182c;border-radius:12px" aria-label="Estimated radius versus extra sunset time"></svg><p class="small">The plotted curve is calculated with the small-angle model.</p></section>
 <section class="panel pad"><h2>Investigation notebook</h2><p class="muted" style="margin-bottom:13px">Describe your physical reasoning and record your assumptions. You can export your notes with the model values.</p><textarea id="notes" class="notebook" placeholder="Standing raises your eyes, changes the line of sight over Earth's curvature, and reveals more of the sunset..."></textarea><div class="buttons"><button class="btn primary" id="export">↓ Export notes (.txt)</button><button class="btn" id="copy">Copy result</button></div><p id="notice" class="small" aria-live="polite"></p></section></div>
 <p class="footer">Sunset Lab is a small educational visualization inspired by the original sunset observation and discussion about perspective, observer height, curvature and elapsed time. Application created with AI assistance. Not a substitute for a measured astronomical analysis.</p></div>
-<script>
-"use strict";
-const el=id=>document.getElementById(id);
-const omega0=2*Math.PI/86400;
-const dip=(r,h)=>Math.acos(r/(r+h));
-const fmt=(v,d=0)=>Number.isFinite(v)?v.toLocaleString(undefined,{maximumFractionDigits:d}):"—";
-const inputs=["low","high","delay","rate"];
-let last=null,playing=false,frame=0;
-function solve(h1,h2,a){if(!(h2>h1)||a<=0)return NaN;
- let lo=1000,hi=1e12;
- const f=r=>dip(r,h2)-dip(r,h1);
- if(f(lo)<a||f(hi)>a)return NaN;
- for(let i=0;i<100;i++){const mid=(lo+hi)/2;if(f(mid)>a)lo=mid;else hi=mid;}
- return (lo+hi)/2;
-}
-function update(){
- const [low,high,delay,rate]=inputs.map(id=>+el(id).value);
- el("lowval").textContent=low.toFixed(2)+" m";
- el("highval").textContent=high.toFixed(2)+" m";
- el("delayval").textContent=delay+" s";
- el("rateval").textContent=rate+"%";
- const a=omega0*rate/100*delay;
- const exact=solve(low,high,a);
- const approx=2*Math.pow(Math.sqrt(high)-Math.sqrt(low),2)/(a*a);
- const valid=Number.isFinite(exact);
- const err=el("error");err.classList.toggle("hidden",valid);err.textContent=high<=low?"The higher eye height must exceed the lower one.":"These inputs do not yield a physically meaningful radius within the solver's range. Try different values.";
- el("radius").textContent=valid?fmt(exact/1000)+" km":"—";
- el("exact").textContent=valid?fmt(exact/1000)+" km":"—";
- el("approx").textContent=fmt(approx/1000)+" km";
- el("angle").textContent=a.toFixed(6);
- el("percent").textContent=valid?(100*Math.abs(approx-exact)/exact).toFixed(3)+"%":"—";
- last={low,high,delay,rate,angle:a,radiusKm:exact/1000,approxKm:approx/1000};
- renderGraph(low,high,rate,delay);
- if(!playing){el("sun").style.top="61%";el("clock").textContent="0.0 seconds";}
-}
-function renderGraph(low,high,rate,selected){
- const svg=el("chart");const ns="http://www.w3.org/2000/svg";svg.replaceChildren();
- function node(name,attrs,text){const x=document.createElementNS(ns,name);Object.entries(attrs||{}).forEach(([k,v])=>x.setAttribute(k,v));if(text!==undefined)x.textContent=text;svg.appendChild(x);return x;}
- const left=52,right=480,top=20,bottom=186,points=[];
- for(let t=3;t<=50;t++){const a=omega0*rate/100*t;const r=2*(Math.sqrt(high)-Math.sqrt(low))**2/a**2/1000;points.push({t,r});}
- const max=points[0].r;const x=t=>left+(t-3)/47*(right-left);const y=r=>bottom-(r/max)*(bottom-top);
- [0,.25,.5,.75,1].forEach(z=>{const yy=bottom-z*(bottom-top);node("line",{x1:left,y1:yy,x2:right,y2:yy,stroke:"#29425b"});node("text",{x:43,y:yy+4,fill:"#9db0c9","text-anchor":"end","font-size":"10"},fmt(max*z/1000,1)+"k");});
- node("path",{d:points.map((p,i)=>(i?"L":"M")+x(p.t).toFixed(2)+","+y(p.r).toFixed(2)).join(" "),fill:"none",stroke:"#efb478","stroke-width":"3"});
- const dot=points.find(p=>p.t===selected);if(dot)node("circle",{cx:x(dot.t),cy:y(dot.r),r:5,fill:"#ffffff",stroke:"#e8a973","stroke-width":3});
- node("text",{x:265,y:212,fill:"#9db0c9","text-anchor":"middle","font-size":"11"},"Extra sunset visibility (seconds)");
- node("text",{x:62,y:18,fill:"#9db0c9","font-size":"10"},"Radius (1000 km)");
-}
-inputs.forEach(id=>el(id).addEventListener("input",update));
-function setFrame(progress){el("sun").style.top=(61+17*progress)+"%";el("clock").textContent=(progress*(+el("delay").value)).toFixed(1)+" seconds";}
-function stop(){playing=false;cancelAnimationFrame(frame);el("play").textContent="▶ Play sunset";}
-el("play").onclick=()=>{if(playing){stop();return;}playing=true;el("play").textContent="Ⅱ Pause";const start=performance.now();const duration=Math.min(8000,Math.max(2200,(+el("delay").value)*300));const animate=now=>{if(!playing)return;const p=Math.min(1,(now-start)/duration);setFrame(p);if(p<1)frame=requestAnimationFrame(animate);else stop();};frame=requestAnimationFrame(animate);};
-el("reset").onclick=()=>{stop();setFrame(0);};
-el("copy").onclick=async()=>{if(!last)return;const s="Sunset Lab: R="+fmt(last.radiusKm)+" km; eye heights="+last.low+", "+last.high+" m; time="+last.delay+" s; angle="+last.angle.toFixed(6)+" rad. Educational simplified model.";try{await navigator.clipboard.writeText(s);el("notice").textContent="Copied."; }catch{el("notice").textContent=s;}};
-el("export").onclick=()=>{const report="Sunset Lab investigation notes\n\n"+JSON.stringify(last,null,2)+"\n\nMy reasoning:\n"+el("notes").value+"\n\nAssumptions: spherical Earth, simplified angular rate, no refraction.\n";const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([report],{type:"text/plain"}));a.download="sunset-lab-notes.txt";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);};
-update();
-</script></body></html>
+<script type="module" src="./app.js"></script></body></html>
