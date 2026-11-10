@@ -1,0 +1,37 @@
+name: Verify Sunset Lab
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check JavaScript syntax
+        run: |
+          node --check app.js
+          node --check physics.mjs
+          node --check tests/physics.test.mjs
+      - name: Test actual physics module
+        run: npm test
+      - name: Verify linked assets and offline bundle
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('index.html').read_text()
+          q=Path('Sunset_Lab_Offline.html').read_text()
+          for name in ('style.css','app.js','physics.mjs'):
+              assert Path(name).is_file(),name
+          assert 'id="sunLow"' in p and 'id="sunHigh"' in p
+          assert 'id="sunLow"' in q and 'id="sunHigh"' in q
+          assert 'id="predicted"' in q
+          assert '<script type="module" src="./app.js"></script>' in p
+          assert '<script type="module">' in q
+          print('Source links and offline bundle verified')
+          PY
