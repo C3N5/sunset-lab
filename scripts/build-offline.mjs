@@ -17,5 +17,13 @@ if(embeddedApp===app)throw new Error('Physics import was not removed');
 const output=html
  .replace(htmlTag,`<style>\n${css}\n</style>`)
  .replace(scriptTag,`<script type="module">\n${embeddedPhysics}\n${embeddedApp}\n</script>`);
-writeFileSync('Sunset_Lab_Offline.html',output,'utf8');
-console.log('Updated Sunset_Lab_Offline.html ('+output.length+' characters)');
+if(process.argv.includes('--check')){
+ const committed=readFileSync('Sunset_Lab_Offline.html','utf8');
+ if(committed!==output){
+  console.error('Offline edition is out of sync. Run npm run build:offline.');
+  process.exitCode=1;
+ }else console.log('Offline HTML matches the editable source.');
+}else{
+ writeFileSync('Sunset_Lab_Offline.html',output,'utf8');
+ console.log('Updated Sunset_Lab_Offline.html ('+output.length+' characters)');
+}
