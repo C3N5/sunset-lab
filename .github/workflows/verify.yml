@@ -18,8 +18,13 @@ jobs:
           node --check app.js
           node --check physics.mjs
           node --check tests/physics.test.mjs
+          node --check scripts/build-offline.mjs
       - name: Test actual physics module
         run: npm test
+      - name: Rebuild offline edition and verify it was committed
+        run: |
+          npm run build:offline
+          git diff --exit-code -- Sunset_Lab_Offline.html
       - name: Verify linked assets and offline bundle
         run: |
           python3 - <<'PY'
