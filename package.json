@@ -7,6 +7,6 @@
     "test": "node --test tests/*.test.mjs",
     "start": "python3 -m http.server 8000",
     "build:offline": "node scripts/build-offline.mjs",
-    "verify": "npm test && npm run build:offline && git diff --exit-code -- Sunset_Lab_Offline.html"
+    "verify": "npm test && node --check app.js && node --check physics.mjs && node --check scripts/build-offline.mjs && node scripts/build-offline.mjs --check"
   }
 }
