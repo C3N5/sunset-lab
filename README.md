@@ -2,7 +2,7 @@
 
 An interactive physics visualization of the **sunset observation from the original student submission**: after a sunset, raising the observer's eyes can reveal the Sun again for a short time.
 
-> **This is not an answer key.** The original submission is the historical starting point, including its rough assumptions and reasoning. The simulator is an AI-assisted extension with some mathematical clarifications and a deliberately simplified solar-motion model.
+> **This is not an answer key.** The original submission is the historical starting point, including its rough assumptions and reasoning. 
 
 ## Run it
 
