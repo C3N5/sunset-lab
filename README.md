@@ -18,14 +18,16 @@ python3 -m http.server 8000
 
 Then open **http://localhost:8000**. The modular `index.html` imports `app.js` and `physics.mjs`, so **opening the modular index.html with file:// can fail due to browser module security**; use a local server. There are no third-party dependencies to install.
 
-### Run the tests
-Node.js 20+ recommended:
+### Run tests and reproduce the offline build
+Node.js 20+ recommended (no npm dependencies to install):
 
 ```bash
 npm test
+npm run build:offline
+npm run verify
 ```
 
-GitHub Actions also checks JavaScript syntax, the physics tests and the offline bundle on each push.
+`npm run build:offline` regenerates `Sunset_Lab_Offline.html` from `index.html`, `style.css`, `physics.mjs` and `app.js`. `npm run verify` checks the model and control tests and confirms the offline output matches the committed version. GitHub Actions runs these checks automatically on pushes and pull requests.
 
 ## What's interactive?
 
