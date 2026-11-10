@@ -120,8 +120,14 @@ function setFrame(seconds){
  const lowerRise=0;
  const higherRise=Number.isFinite(m.difference)?Math.max(0,m.difference*scale):0;
  const fall=m.angularRate*seconds*scale;
- $("sunLow").style.top="calc(72% + "+(fall-lowerRise).toFixed(2)+"px)";
- $("sunHigh").style.top="calc(72% + "+(fall-higherRise).toFixed(2)+"px)";
+ // The Sun must be fully hidden when the upper edge touches the horizon:
+ // add half the rendered Sun diameter to the center's vertical position.
+ // Use explicit subtraction for negative offsets to keep CSS calc() valid.
+ const position=offset=>offset>=0
+  ? "calc(72% + var(--sun-half) + "+offset.toFixed(2)+"px)"
+  : "calc(72% + var(--sun-half) - "+(-offset).toFixed(2)+"px)";
+ $("sunLow").style.top=position(fall-lowerRise);
+ $("sunHigh").style.top=position(fall-higherRise);
  $("clock").textContent=seconds.toFixed(1)+" seconds";
  if(!m.validHeights){
   $("animationCaption").textContent="Raise the higher eye position above the lower eye position to compare sunsets.";
