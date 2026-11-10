@@ -69,4 +69,3 @@ Baseline `omega = 2π/86400 rad/s` is **not generally the Sun's actual vertical 
 
 The user's actual sunset submission motivated the model: changing perspective by standing, seeing farther over Earth's curve, the 11-second observation, an approximate 0 m versus 1.83 m eye-height pair, the right triangle and the use of `R/(R+h)`. The submission was itself prepared through interactive tutoring and LaTeX help, and its reasoning and assumptions are **not independently verified as an exact physical solution**. The original submitted PDF is **not publicly reposted** here.
 
-The software and refinements were implemented with AI assistance. This repo is a physics **demo**, not a new independent experiment or proof that the original assignment is mathematically exact.
