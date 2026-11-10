@@ -2,13 +2,40 @@
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Sunset Lab · Interactive Earth-radius investigation</title>
 <style>
+
 :root{color-scheme:dark;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;background:#0b1425;color:#eef3fb}*{box-sizing:border-box}
 body{margin:0;background:radial-gradient(ellipse at 10% 0%,#1d3153 0%,#0b1425 50%);min-height:100vh}.shell{max-width:1230px;margin:auto;padding:26px 22px 70px}
 header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap}.brand{display:flex;gap:12px;align-items:center}.logo{width:45px;height:45px;display:grid;place-items:center;border-radius:14px;background:#e3a562;color:#152139;font-size:25px}.brand h1{font-size:23px;margin:0}.brand p{color:#9dacc4;margin:2px 0 0;font-size:12px}.chip{border:1px solid #39506f;padding:8px 11px;color:#b3c2d5;border-radius:22px;font-size:12px}
 .layout{display:grid;grid-template-columns:1.55fr 1fr;gap:18px}.panel{border:1px solid #30415b;background:#111f34db;border-radius:18px;overflow:hidden}.pad{padding:21px}.panel h2{font-size:17px;margin:0 0 8px}.muted{color:#9db0c9;font-size:13px;line-height:1.5;margin:0}.sky{height:285px;position:relative;overflow:hidden;background:linear-gradient(#1c2c50 2%,#654461 50%,#e18c63 72%,#eeb889 100%)}.sun{position:absolute;width:76px;height:76px;border-radius:50%;left:62%;top:61%;background:#ffe7a6;box-shadow:0 0 33px #ffcf8c,0 0 76px #e89f6c;transform:translate(-50%,-50%);transition:top .12s linear}.sea{position:absolute;top:72%;left:-5%;width:110%;height:45%;background:linear-gradient(#376782,#173b60 70%);border-top:2px solid #bed8d8;box-shadow:0 -8px 26px #dfbaa757}.sea:after{content:'';position:absolute;left:0;right:0;top:25px;height:1px;background:#7192a9;opacity:.45}.horizon-label{position:absolute;left:18px;top:75%;color:#d4e7ee;font-size:11px}.observer{position:absolute;left:15%;bottom:26%;z-index:4;text-shadow:0 3px 12px #18253c;font-size:35px}.small{font-size:12px;color:#9db0c9}.flex{display:flex;align-items:center;justify-content:space-between;gap:12px}.controls{display:grid;gap:18px}.control label{display:block;color:#dbe6f5;font-weight:600;font-size:13px;margin-bottom:7px}.control input[type=range]{width:100%;accent-color:#f0b375}.control .value{color:#ffcb93;font-variant-numeric:tabular-nums;font-size:13px}.control small{font-size:11px;color:#9eb1ca}.buttons{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.btn{border:1px solid #556882;background:#243956;border-radius:10px;color:#eef3fb;padding:10px 14px;font-weight:600;cursor:pointer}.btn.primary{background:#e9ad72;color:#1e2b3e;border-color:#e9ad72}.btn:hover{filter:brightness(1.12)}.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:18px 0}.metric{border:1px solid #364861;border-radius:14px;background:#172942;padding:16px}.metric .n{font-size:clamp(19px,2.3vw,27px);font-weight:760;letter-spacing:-.5px;margin:7px 0 3px;font-variant-numeric:tabular-nums}.metric .k{font-size:11px;color:#9db0c9}.section-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}.formula{font-family:ui-monospace,monospace;font-size:13px;background:#0c1829;padding:12px 14px;border-radius:10px;overflow-x:auto;line-height:1.9;color:#d5e1f1}.callout{border-left:3px solid #f0b375;background:#1a2d42;padding:12px 15px;color:#becde1;font-size:12px;line-height:1.65;border-radius:0 8px 8px 0}.comparison{display:grid;grid-template-columns:1fr 1fr;gap:10px}.comparison div{background:#0e1c31;padding:13px;border-radius:11px}.comparison strong{display:block;font-size:18px;margin-top:5px}.comparison span{font-size:11px;color:#9db0c9}.geom{width:100%;height:auto;display:block;background:#0c182c;border-radius:12px}.notebook{width:100%;min-height:110px;border:1px solid #40536b;background:#0c182c;color:#e8eef7;border-radius:10px;padding:11px;resize:vertical;font:inherit;font-size:13px}.footer{margin-top:20px;color:#8f9db4;font-size:12px;line-height:1.6}.slider-head{display:flex;justify-content:space-between;align-items:center;gap:10px}.error{color:#ffb3aa;padding:8px 0;font-size:12px}.hidden{display:none}@media(max-width:850px){.layout,.section-grid{grid-template-columns:1fr}.cards{grid-template-columns:1fr 1fr}.shell{padding:17px 12px 50px}.sky{height:235px}}@media(max-width:420px){.cards{grid-template-columns:1fr}.comparison{grid-template-columns:1fr}}
+
+/* v2 · two-view physics animation */
+.sky{height:315px;background:linear-gradient(180deg,#192744,#684b67 53%,#e19771 78%,#d4a87b 100%);position:relative}
+.sky-caption{position:absolute;z-index:6;top:12px;left:16px;font-size:10px;letter-spacing:.14em;color:#f8dfc2;font-weight:800}
+.views{position:absolute;inset:0 0 36px;display:grid;grid-template-columns:1fr 1fr}
+.view{position:relative;overflow:hidden;background:linear-gradient(180deg,rgba(20,31,54,.15),transparent)}
+.view:first-child{border-right:1px dashed rgba(255,255,255,.4)}
+.view-label{position:absolute;top:44px;left:12px;color:#f8f0e5;font-size:10px;font-weight:750;z-index:5;letter-spacing:.06em}
+.view-bottom{position:absolute;z-index:5;bottom:8px;left:13px;font-size:12px;color:#deecfb}
+.view .sea{top:72%;height:29%;z-index:3}
+.view .sun{left:50%;top:72%;width:57px;height:57px;z-index:2;transition:none}
+.animation-caption{position:absolute;bottom:0;left:0;right:0;padding:10px 14px;font-size:11px;color:#e7edfa;min-height:36px;background:#152944;text-align:center}
+.visual-legend{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.visual-legend div{border:1px solid #344861;border-radius:9px;padding:10px;background:#13243b}
+.visual-legend span{display:block;font-size:10px;color:#a7b9cf;min-height:25px}
+.visual-legend strong{display:block;font-size:16px;margin-top:5px}
+@media(max-width:850px){.sky{height:280px}}
+@media(max-width:420px){.visual-legend{grid-template-columns:1fr 1fr}.view-label{font-size:9px}.view .sun{width:49px;height:49px}}
+
 </style></head><body><div class="shell">
 <header><div class="brand"><div class="logo">☀</div><div><h1>Sunset Lab</h1><p>See farther. Measure curvature. Explore a physics model.</p></div></div><span class="chip">Interactive scientific model · works offline</span></header>
-<div class="layout"><section class="panel"><div class="sky"><div class="sun" id="sun"></div><div class="sea"></div><div class="observer">♟</div><span class="horizon-label">Ocean horizon · schematic animation</span></div><div class="pad"><div class="flex"><div><h2>What happens when you stand up?</h2><p class="muted">Changing your eye height changes where the curved horizon blocks the Sun. Play the illustrative sunset again.</p></div></div><div class="buttons"><button class="btn primary" id="play">▶ Play sunset</button><button class="btn" id="reset">↺ Reset</button><span id="clock" class="small" aria-live="polite">0.0 seconds</span></div><p class="small">Animation is schematic, not to scale, and not a real-time astronomical rendering.</p></div></section>
+<div class="layout"><section class="panel"><div class="sky" id="sky">
+ <div class="sky-caption">TWO VIEWS · SAME SUN</div>
+ <div class="views">
+  <div class="view"><span class="view-label">LOWER EYE POSITION</span><div class="sun" id="sunLow"></div><div class="sea"></div><span class="view-bottom" id="viewLow">0.00 m</span></div>
+  <div class="view"><span class="view-label">HIGHER EYE POSITION</span><div class="sun" id="sunHigh"></div><div class="sea"></div><span class="view-bottom" id="viewHigh">1.83 m</span></div>
+ </div>
+ <div class="animation-caption" id="animationCaption">At the lower position the Sun has just disappeared. How much longer can the higher observer see it?</div>
+</div><div class="pad"><div class="flex"><div><h2>What happens when you stand up?</h2><p class="muted">Changing your eye height changes where the curved horizon blocks the Sun. Play the illustrative sunset again.</p></div></div><div class="buttons"><button class="btn primary" id="play">▶ Play sunset</button><button class="btn" id="reset">↺ Reset</button><span id="clock" class="small" aria-live="polite">0.0 seconds</span></div><p class="small">Two perspective views · exaggerated vertical angle for visibility · modeled with a fixed 6,371 km reference Earth. The observed delay slider is an independent experimental input.</p><div class="visual-legend"><div><span>Reference Earth predicts</span><strong id="predicted">—</strong></div><div><span>Your observed delay</span><strong id="observed">11 s</strong></div><div><span>Difference</span><strong id="difference">—</strong></div></div></div></section>
 <aside class="panel pad"><h2>Experiment controls</h2><p class="muted" style="margin-bottom:22px">Change the assumed measurements to see how the model responds.</p>
 <div class="controls">
 <div class="control"><div class="slider-head"><label for="low">Lower eye height</label><span class="value" id="lowval">0.00 m</span></div><input id="low" type="range" min="0" max="2" step=".01" value="0"><small>Lying down, sitting, or a low camera</small></div>
@@ -19,8 +46,8 @@ header{display:flex;align-items:center;justify-content:space-between;gap:16px;ma
 <div class="cards"><div class="metric"><div class="k">Inferred Earth radius · exact geometry</div><div id="radius" class="n">—</div><div class="k">Model-derived, not measured directly</div></div>
 <div class="metric"><div class="k">Horizon angle difference</div><div id="angle" class="n">—</div><div class="k">radians</div></div>
 <div class="metric"><div class="k">Approximation error</div><div id="percent" class="n">—</div><div class="k">Small-angle vs exact geometry</div></div></div>
-<div class="section-grid"><section class="panel pad"><h2>Explore the geometry</h2><p class="muted" style="margin-bottom:13px">The horizon sightline grazes a spherical planet. The line to the tangent point is perpendicular to the radius there.</p>
-<svg class="geom" viewBox="0 0 500 290" role="img" aria-label="Schematic Earth cross-section with observer, tangent sightline, Earth radius and eye height">
+<div class="section-grid"><section class="panel pad"><h2>Explore the geometry</h2><p class="muted" style="margin-bottom:13px">The observer and two tangent sightlines change as the eye heights change. Vertical separation is exaggerated for readability.</p><p class="small" id="geometryCaption">—</p>
+<svg id="geomSVG" class="geom" viewBox="0 0 500 290" role="img" aria-label="Schematic Earth cross-section with observer, tangent sightline, Earth radius and eye height">
 <defs><radialGradient id="planet"><stop stop-color="#347898"/><stop offset="1" stop-color="#194966"/></radialGradient></defs>
 <circle cx="250" cy="238" r="170" fill="url(#planet)" stroke="#6fb0c3" stroke-width="2"/><circle cx="250" cy="238" r="4" fill="#f5ddaf"/>
 <path d="M250 238 L359 108 L437 39" fill="none" stroke="#dce6f1" stroke-width="2" stroke-dasharray="5 6"/>
@@ -38,59 +65,210 @@ header{display:flex;align-items:center;justify-content:space-between;gap:16px;ma
 <div class="section-grid"><section class="panel pad"><h2>How sensitive is the estimate?</h2><p class="muted" style="margin-bottom:13px">Hold the heights fixed and vary the measured time. This shows why accurate timing matters.</p><svg id="chart" viewBox="0 0 500 225" style="width:100%;height:auto;background:#0c182c;border-radius:12px" aria-label="Estimated radius versus extra sunset time"></svg><p class="small">The plotted curve is calculated with the small-angle model.</p></section>
 <section class="panel pad"><h2>Investigation notebook</h2><p class="muted" style="margin-bottom:13px">Describe your physical reasoning and record your assumptions. You can export your notes with the model values.</p><textarea id="notes" class="notebook" placeholder="Standing raises your eyes, changes the line of sight over Earth's curvature, and reveals more of the sunset..."></textarea><div class="buttons"><button class="btn primary" id="export">↓ Export notes (.txt)</button><button class="btn" id="copy">Copy result</button></div><p id="notice" class="small" aria-live="polite"></p></section></div>
 <p class="footer">Sunset Lab is a small educational visualization inspired by the original sunset observation and discussion about perspective, observer height, curvature and elapsed time. Application created with AI assistance. Not a substitute for a measured astronomical analysis.</p></div>
-<script>
-"use strict";
-const el=id=>document.getElementById(id);
-const omega0=2*Math.PI/86400;
-const dip=(r,h)=>Math.acos(r/(r+h));
-const fmt=(v,d=0)=>Number.isFinite(v)?v.toLocaleString(undefined,{maximumFractionDigits:d}):"—";
-const inputs=["low","high","delay","rate"];
-let last=null,playing=false,frame=0;
-function solve(h1,h2,a){if(!(h2>h1)||a<=0)return NaN;
- let lo=1000,hi=1e12;
- const f=r=>dip(r,h2)-dip(r,h1);
- if(f(lo)<a||f(hi)>a)return NaN;
- for(let i=0;i<100;i++){const mid=(lo+hi)/2;if(f(mid)>a)lo=mid;else hi=mid;}
+<script type="module">
+/** Sunset Lab physics engine. All lengths in meters, angles in radians. */
+const SECONDS_PER_DAY=86400;
+const BASE_RATE=2*Math.PI/SECONDS_PER_DAY;
+function horizonDip(radius,height){
+ if(!(radius>0)||!(height>=0)) throw new RangeError("Invalid radius or height");
+ return Math.atan(Math.sqrt(height*(2*radius+height))/radius);
+}
+function radiusSmallAngle(lower,higher,angle){
+ if(!(higher>lower) || !(lower>=0) || !(angle>0)) return NaN;
+ return 2*(Math.sqrt(higher)-Math.sqrt(lower))**2/angle**2;
+}
+function radiusExact(lower,higher,angle){
+ if(!(higher>lower) || !(lower>=0) || !(angle>0)) return NaN;
+ if(lower===0){
+  if(angle>=Math.PI/2)return NaN;
+  return higher*Math.cos(angle)/(2*Math.sin(angle/2)**2);
+ }
+ // For both heights nonzero, use the large-radius physical branch only.
+ let lo=Math.max(1000,1000*higher),hi=1e12;
+ const f=r=>horizonDip(r,higher)-horizonDip(r,lower);
+ if(f(lo)<angle || f(hi)>angle)return NaN;
+ for(let i=0;i<100;i++){
+  const mid=(lo+hi)/2;
+  if(f(mid)>angle)lo=mid;else hi=mid;
+ }
  return (lo+hi)/2;
 }
+function estimate({lower,higher,delay,rate=100}){
+ const angle=BASE_RATE*rate/100*delay;
+ const exact=radiusExact(lower,higher,angle);
+ const approx=radiusSmallAngle(lower,higher,angle);
+ return {angle,exact,approx,valid:Number.isFinite(exact)};
+}
+
+
+
+const $=id=>document.getElementById(id);
+const format=(x,decimals=0)=>Number.isFinite(x)?x.toLocaleString(undefined,{maximumFractionDigits:decimals}):"—";
+const REFERENCE_EARTH_RADIUS=6371000;
+const inputs=["low","high","delay","rate"];
+let state=null,playing=false,frame=0,animationStart=0,elapsedSeconds=0;
+
+function readInputs(){
+ const [lower,higher,delay,rate]=inputs.map(id=>Number($(id).value));
+ return {lower,higher,delay,rate};
+}
+function modelValues(raw){
+ const result=estimate(raw);
+ const validHeights=raw.higher>raw.lower&&raw.lower>=0;
+ const difference=validHeights?horizonDip(REFERENCE_EARTH_RADIUS,raw.higher)-horizonDip(REFERENCE_EARTH_RADIUS,raw.lower):NaN;
+ const angularRate=BASE_RATE*raw.rate/100;
+ const predictedDelay=difference/angularRate;
+ return {...raw,...result,angularRate,difference,predictedDelay,validHeights};
+}
 function update(){
- const [low,high,delay,rate]=inputs.map(id=>+el(id).value);
- el("lowval").textContent=low.toFixed(2)+" m";
- el("highval").textContent=high.toFixed(2)+" m";
- el("delayval").textContent=delay+" s";
- el("rateval").textContent=rate+"%";
- const a=omega0*rate/100*delay;
- const exact=solve(low,high,a);
- const approx=2*Math.pow(Math.sqrt(high)-Math.sqrt(low),2)/(a*a);
- const valid=Number.isFinite(exact);
- const err=el("error");err.classList.toggle("hidden",valid);err.textContent=high<=low?"The higher eye height must exceed the lower one.":"These inputs do not yield a physically meaningful radius within the solver's range. Try different values.";
- el("radius").textContent=valid?fmt(exact/1000)+" km":"—";
- el("exact").textContent=valid?fmt(exact/1000)+" km":"—";
- el("approx").textContent=fmt(approx/1000)+" km";
- el("angle").textContent=a.toFixed(6);
- el("percent").textContent=valid?(100*Math.abs(approx-exact)/exact).toFixed(3)+"%":"—";
- last={low,high,delay,rate,angle:a,radiusKm:exact/1000,approxKm:approx/1000};
- renderGraph(low,high,rate,delay);
- if(!playing){el("sun").style.top="61%";el("clock").textContent="0.0 seconds";}
+ const raw=readInputs();
+ $("lowval").textContent=raw.lower.toFixed(2)+" m";
+ $("highval").textContent=raw.higher.toFixed(2)+" m";
+ $("delayval").textContent=raw.delay+" s";
+ $("rateval").textContent=raw.rate+"%";
+ state=modelValues(raw);
+ const m=state;
+ const valid=m.valid;
+ $("error").classList.toggle("hidden",valid);
+ $("error").textContent=m.validHeights?"These inputs cannot yield a valid radius for the chosen model.":"The higher observation point must be above the lower observation point.";
+ $("radius").textContent=valid?format(m.exact/1000)+" km":"—";
+ $("exact").textContent=valid?format(m.exact/1000)+" km":"—";
+ $("approx").textContent=Number.isFinite(m.approx)?format(m.approx/1000)+" km":"—";
+ $("angle").textContent=m.angle.toFixed(6);
+ $("percent").textContent=valid?((Math.abs(m.approx-m.exact)/m.exact)*100).toFixed(3)+"%":"—";
+ $("predicted").textContent=Number.isFinite(m.predictedDelay)?format(m.predictedDelay,2)+" s":"—";
+ $("observed").textContent=m.delay+" s";
+ $("difference").textContent=Number.isFinite(m.predictedDelay)?format(m.delay-m.predictedDelay,2)+" s":"—";
+ $("viewLow").textContent=m.lower.toFixed(2)+" m";
+ $("viewHigh").textContent=m.higher.toFixed(2)+" m";
+ $("geometryCaption").textContent="Lower: "+m.lower.toFixed(2)+" m · Higher: "+m.higher.toFixed(2)+" m · Reference horizon-dip difference: "+(Number.isFinite(m.difference)?(m.difference*180/Math.PI).toFixed(4)+"°":"—");
+ renderGraph(m);
+ renderGeometry(m);
+ stop();
+ setFrame(0);
 }
-function renderGraph(low,high,rate,selected){
- const svg=el("chart");const ns="http://www.w3.org/2000/svg";svg.replaceChildren();
- function node(name,attrs,text){const x=document.createElementNS(ns,name);Object.entries(attrs||{}).forEach(([k,v])=>x.setAttribute(k,v));if(text!==undefined)x.textContent=text;svg.appendChild(x);return x;}
- const left=52,right=480,top=20,bottom=186,points=[];
- for(let t=3;t<=50;t++){const a=omega0*rate/100*t;const r=2*(Math.sqrt(high)-Math.sqrt(low))**2/a**2/1000;points.push({t,r});}
- const max=points[0].r;const x=t=>left+(t-3)/47*(right-left);const y=r=>bottom-(r/max)*(bottom-top);
- [0,.25,.5,.75,1].forEach(z=>{const yy=bottom-z*(bottom-top);node("line",{x1:left,y1:yy,x2:right,y2:yy,stroke:"#29425b"});node("text",{x:43,y:yy+4,fill:"#9db0c9","text-anchor":"end","font-size":"10"},fmt(max*z/1000,1)+"k");});
- node("path",{d:points.map((p,i)=>(i?"L":"M")+x(p.t).toFixed(2)+","+y(p.r).toFixed(2)).join(" "),fill:"none",stroke:"#efb478","stroke-width":"3"});
- const dot=points.find(p=>p.t===selected);if(dot)node("circle",{cx:x(dot.t),cy:y(dot.r),r:5,fill:"#ffffff",stroke:"#e8a973","stroke-width":3});
- node("text",{x:265,y:212,fill:"#9db0c9","text-anchor":"middle","font-size":"11"},"Extra sunset visibility (seconds)");
- node("text",{x:62,y:18,fill:"#9db0c9","font-size":"10"},"Radius (1000 km)");
+function renderGeometry(m){
+ const svg=$("geomSVG");
+ // This is deliberately a not-to-scale *local* cross-section; the text gives the actual angles.
+ svg.innerHTML="";
+ const ns="http://www.w3.org/2000/svg";
+ function node(name,attrs={},txt){
+  const e=document.createElementNS(ns,name);
+  for(const [k,v] of Object.entries(attrs))e.setAttribute(k,String(v));
+  if(txt!==undefined)e.textContent=txt;
+  svg.append(e);return e;
+ }
+ node("rect",{x:0,y:0,width:500,height:290,rx:12,fill:"#0c182c"});
+ node("path",{d:"M 0 250 Q 248 298 500 250 L 500 290 L 0 290 Z",fill:"#1e526e",stroke:"#77aec5","stroke-width":2});
+ node("path",{d:"M 18 211 Q 245 265 480 211",fill:"none",stroke:"#487e9a","stroke-width":1.1,"stroke-dasharray":"3 5"});
+ const lowerY=138-Math.min(30,m.lower*7),higherY=138-Math.min(55,m.higher*7);
+ const lowEndX=145-Math.min(28,m.lower*5);
+ const highEndX=115-Math.min(45,m.higher*5);
+ // Tangent lines diagrammatic: endpoints shift as viewing height changes.
+ node("line",{x1:430,y1:lowerY,x2:lowEndX,y2:236,stroke:"#9bb1ca","stroke-width":2,"stroke-dasharray":"6 5"});
+ node("line",{x1:430,y1:higherY,x2:highEndX,y2:226,stroke:"#ffcb89","stroke-width":3});
+ node("line",{x1:430,y1:lowerY,x2:430,y2:higherY,stroke:"#f7e3be","stroke-width":2});
+ node("circle",{cx:430,cy:lowerY,r:6,fill:"#a5b5cd"});
+ node("circle",{cx:430,cy:higherY,r:6,fill:"#ffcb89"});
+ node("circle",{cx:lowEndX,cy:236,r:4,fill:"#a5b5cd"});
+ node("circle",{cx:highEndX,cy:226,r:4,fill:"#ffcb89"});
+ node("text",{x:350,y:lowerY+21,fill:"#b7c7dc","font-size":12},"Lower eye");
+ node("text",{x:350,y:higherY-13,fill:"#ffcb89","font-size":12},"Higher eye");
+ node("text",{x:22,y:28,fill:"#d8e6f5","font-size":13},"Observer height changes sightlines");
+ node("text",{x:22,y:47,fill:"#93aac4","font-size":11},"Diagram exaggerated, not to scale");
+ node("text",{x:27,y:274,fill:"#d6e8f5","font-size":12},"Earth's curved surface");
 }
-inputs.forEach(id=>el(id).addEventListener("input",update));
-function setFrame(progress){el("sun").style.top=(61+17*progress)+"%";el("clock").textContent=(progress*(+el("delay").value)).toFixed(1)+" seconds";}
-function stop(){playing=false;cancelAnimationFrame(frame);el("play").textContent="▶ Play sunset";}
-el("play").onclick=()=>{if(playing){stop();return;}playing=true;el("play").textContent="Ⅱ Pause";const start=performance.now();const duration=Math.min(8000,Math.max(2200,(+el("delay").value)*300));const animate=now=>{if(!playing)return;const p=Math.min(1,(now-start)/duration);setFrame(p);if(p<1)frame=requestAnimationFrame(animate);else stop();};frame=requestAnimationFrame(animate);};
-el("reset").onclick=()=>{stop();setFrame(0);};
-el("copy").onclick=async()=>{if(!last)return;const s="Sunset Lab: R="+fmt(last.radiusKm)+" km; eye heights="+last.low+", "+last.high+" m; time="+last.delay+" s; angle="+last.angle.toFixed(6)+" rad. Educational simplified model.";try{await navigator.clipboard.writeText(s);el("notice").textContent="Copied."; }catch{el("notice").textContent=s;}};
-el("export").onclick=()=>{const report="Sunset Lab investigation notes\n\n"+JSON.stringify(last,null,2)+"\n\nMy reasoning:\n"+el("notes").value+"\n\nAssumptions: spherical Earth, simplified angular rate, no refraction.\n";const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([report],{type:"text/plain"}));a.download="sunset-lab-notes.txt";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);};
+function renderGraph(m){
+ const svg=$("chart"),ns="http://www.w3.org/2000/svg";
+ svg.replaceChildren();
+ const add=(name,attrs={},txt)=>{
+  const node=document.createElementNS(ns,name);
+  for(const [k,v] of Object.entries(attrs))node.setAttribute(k,String(v));
+  if(txt!==undefined)node.textContent=txt;
+  svg.append(node);return node;
+ };
+ const points=[];
+ for(let t=3;t<=50;t++){
+  const angle=BASE_RATE*m.rate/100*t;
+  points.push({t,radius:radiusSmallAngle(m.lower,m.higher,angle)/1000});
+ }
+ const ymax=points[0].radius;
+ if(!Number.isFinite(ymax))return;
+ const x=t=>52+(t-3)/47*428;
+ const y=r=>186-(r/ymax)*166;
+ for(let i=0;i<=4;i++){
+  const yline=186-i*166/4;
+  add("line",{x1:52,y1:yline,x2:480,y2:yline,stroke:"#29425b"});
+  add("text",{x:44,y:yline+4,fill:"#9db0c9","text-anchor":"end","font-size":"10"},format((i/4)*ymax/1000,1)+"k");
+ }
+ add("path",{d:points.map((p,i)=>(i?"L":"M")+x(p.t).toFixed(2)+","+y(p.radius).toFixed(2)).join(" "),fill:"none",stroke:"#efb478","stroke-width":3});
+ const chosen=radiusSmallAngle(m.lower,m.higher,m.angle)/1000;
+ if(m.delay>=3&&m.delay<=50&&Number.isFinite(chosen))add("circle",{cx:x(m.delay),cy:y(chosen),r:5,fill:"#fff",stroke:"#efb478","stroke-width":3});
+ add("text",{x:265,y:212,fill:"#9db0c9","text-anchor":"middle","font-size":11},"Observed delay (seconds)");
+ add("text",{x:62,y:15,fill:"#9db0c9","font-size":10},"Radius (1000 km)");
+}
+function stop(){
+ playing=false;
+ cancelAnimationFrame(frame);
+ $("play").textContent="▶ Play sunset";
+}
+function setFrame(seconds){
+ elapsedSeconds=seconds;
+ if(!state)return;
+ const m=state;
+ // 72% is the ocean horizon in each view. Height offsets are proportional to
+ // the actual horizon-dip angles for a fixed reference Earth, visually amplified.
+ const scale=56000; // px per radian, illustrative and not to scale
+ const lowerRise=0;
+ const higherRise=Number.isFinite(m.difference)?Math.max(0,m.difference*scale):0;
+ const fall=m.angularRate*seconds*scale;
+ $("sunLow").style.top="calc(72% + "+(fall-lowerRise).toFixed(2)+"px)";
+ $("sunHigh").style.top="calc(72% + "+(fall-higherRise).toFixed(2)+"px)";
+ $("clock").textContent=seconds.toFixed(1)+" seconds";
+ if(!m.validHeights){
+  $("animationCaption").textContent="Raise the higher eye position above the lower eye position to compare sunsets.";
+ }else if(seconds===0){
+  $("animationCaption").textContent="Lower view: at the horizon. Higher view: "+format(m.predictedDelay,1)+" s of extra visibility on the reference Earth.";
+ }else if(seconds>=m.predictedDelay){
+  $("animationCaption").textContent="The reference-Earth higher sunset has now passed (predicted "+format(m.predictedDelay,1)+" s).";
+ }else{
+  $("animationCaption").textContent=format(Math.max(0,m.predictedDelay-seconds),1)+" s of predicted extra visibility remaining at the higher position.";
+ }
+}
+inputs.forEach(id=>$(id).addEventListener("input",update));
+$("play").addEventListener("click",()=>{
+ if(playing){stop();return;}
+ if(!state?.validHeights)return;
+ playing=true;
+ $("play").textContent="Ⅱ Pause";
+ const maxSeconds=Math.max(state.delay,state.predictedDelay)*1.15;
+ const durationMs=Math.min(10000,Math.max(2200,maxSeconds*280));
+ const initialSeconds=elapsedSeconds>=maxSeconds?0:elapsedSeconds;
+ animationStart=performance.now()-initialSeconds/maxSeconds*durationMs;
+ const tick=now=>{
+  if(!playing)return;
+  const fraction=Math.min(1,(now-animationStart)/durationMs);
+  setFrame(fraction*maxSeconds);
+  if(fraction<1)frame=requestAnimationFrame(tick);
+  else stop();
+ };
+ frame=requestAnimationFrame(tick);
+});
+$("reset").addEventListener("click",()=>{stop();setFrame(0);});
+$("copy").addEventListener("click",async()=>{
+ const m=state;
+ if(!m)return;
+ const summary="Sunset Lab · h1="+m.lower+" m, h2="+m.higher+" m, observed="+m.delay+" s, inferred R="+format(m.exact/1000)+" km, reference Earth predicts "+format(m.predictedDelay,2)+" s. Simplified model.";
+ try{await navigator.clipboard.writeText(summary);$("notice").textContent="Copied.";}catch{$("notice").textContent=summary;}
+});
+$("export").addEventListener("click",()=>{
+ const m=state;
+ const text="Sunset Lab investigation notes\n\n"+JSON.stringify(m,null,2)+"\n\nMy reasoning:\n"+$("notes").value+"\n\nAssumptions: spherical Earth; apparent angular rate simplified; no refraction.\n";
+ const url=URL.createObjectURL(new Blob([text],{type:"text/plain"}));
+ const link=document.createElement("a");
+ link.href=url;link.download="sunset-lab-notes.txt";link.click();
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
+});
 update();
+
 </script></body></html>
