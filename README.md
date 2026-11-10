@@ -12,4 +12,4 @@ For a spherical planet, the horizon dip angle at eye height `h` is `acos(R/(R+h)
 
 ## Origin and attribution
 
-Inspired by the author's original sunset physics project and explanations about perspective, observer height, curvature and elapsed time. The visualizer and supporting code were AI-assisted; the project does not claim the author independently implemented the code.
+Inspired by the author's original sunset physics project and explanations about perspective, observer height, curvature and elapsed time. 
